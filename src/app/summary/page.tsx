@@ -53,15 +53,20 @@ export default async function SummaryPage({ searchParams }: Props) {
         </div>
         <div className="flex items-center gap-3">
           <MonthNav month={month} options={monthOptions} />
-          <select
-            className="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white"
-            defaultValue={monthField}
-            onChange={() => {}}
-            name="monthField"
-          >
-            <option value="caused">Mes causado</option>
-            <option value="payment">Mes de pago</option>
-          </select>
+          <div className="flex gap-1 bg-white border border-slate-200 rounded-lg p-1 text-sm">
+            <a
+              href={`/summary?month=${month}&monthField=caused`}
+              className={`px-3 py-1.5 rounded-md font-medium transition-colors ${monthField === 'caused' ? 'bg-violet-600 text-white' : 'text-slate-600 hover:bg-slate-50'}`}
+            >
+              Causado
+            </a>
+            <a
+              href={`/summary?month=${month}&monthField=payment`}
+              className={`px-3 py-1.5 rounded-md font-medium transition-colors ${monthField === 'payment' ? 'bg-violet-600 text-white' : 'text-slate-600 hover:bg-slate-50'}`}
+            >
+              Pago
+            </a>
+          </div>
         </div>
       </div>
 
