@@ -22,7 +22,7 @@ const COLORS = [
 const LEVEL_LABELS: Record<string, string> = {
   couple: '💑 Pareja',
   xime: '👩 Solo Xime',
-  dani: '👨 Solo Dani',
+  dani: '👩 Solo Dani',
 }
 
 export default function CategoryManager({ categories: initial }: { categories: Category[] }) {
@@ -144,7 +144,7 @@ export default function CategoryManager({ categories: initial }: { categories: C
         </td>
         <td className="px-4 py-3">
           {isEditing ? (
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap items-center gap-1">
               {COLORS.map((c) => (
                 <button
                   key={c} type="button"
@@ -153,6 +153,13 @@ export default function CategoryManager({ categories: initial }: { categories: C
                   style={{ backgroundColor: c }}
                 />
               ))}
+              <input
+                type="color"
+                value={local.color}
+                onChange={(e) => setLocal({ ...local, color: e.target.value })}
+                className="w-5 h-5 rounded-full cursor-pointer border-0 p-0 bg-transparent"
+                title="Color personalizado"
+              />
             </div>
           ) : (
             <span className="w-5 h-5 rounded-full inline-block" style={{ backgroundColor: cat.color }} />
@@ -262,7 +269,7 @@ export default function CategoryManager({ categories: initial }: { categories: C
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">Color</label>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 {COLORS.map((c) => (
                   <button
                     key={c} type="button"
@@ -271,6 +278,13 @@ export default function CategoryManager({ categories: initial }: { categories: C
                     style={{ backgroundColor: c }}
                   />
                 ))}
+                <input
+                  type="color"
+                  value={form.color}
+                  onChange={(e) => setForm({ ...form, color: e.target.value })}
+                  className="w-6 h-6 rounded-full cursor-pointer border-0 p-0 bg-transparent"
+                  title="Color personalizado"
+                />
               </div>
             </div>
             <div className="flex gap-3">
