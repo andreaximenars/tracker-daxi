@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Transaction {
+  id           Int       @id @default(autoincrement())
+  description  String
+  categoryId   Int
+  category     Category  @relation(fields: [categoryId], references: [id])
+  amount       Float
+  paidBy       String    // "Xime" | "Dani"
+  causedDate   String    // ISO date string YYYY-MM-DD
+  paymentDate  String?   // ISO date string YYYY-MM-DD
+  causedMonth  String    // "YYYY-MM"
+  paymentMonth String?   // "YYYY-MM"
+  status       String    @default("Ya") // "Ya" | "Pendiente"
+  percentXime  Float
+  percentDani  Float
+  notes        String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Category {
+  id             Int           @id @default(autoincrement())
+  name           String        @unique
+  defaultPctXime Float         @default(70)
+  defaultPctDani Float         @default(30)
+  level          String        @default("couple") // "couple" | "xime" | "dani"
+  color          String        @default("#8B5CF6")
+  transactions   Transaction[]
+  budgets        Budget[]
+}
+
+model Budget {
+  id         Int       @id @default(autoincrement())
+  month      String    // "YYYY-MM"
+  level      String    // "couple" | "xime" | "dani"
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  amount     Float
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@unique([month, level, categoryId])
+}
